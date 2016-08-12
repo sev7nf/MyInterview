@@ -1,6 +1,7 @@
 HashMap、Hashtable几乎相同。
-    HashMap：由于数据结构使用的是table+Entry储存数据，所以取出数据是无序的。
-    Hashtable：也是无序的
+    Hashtable：无序。继承自过时的Dictionary
+    HashMap：继承AbstractMap，实现Map接口。由于数据结构使用的是table+Entry储存数据，所以取出数据是无序的。
+    
 HashMap、Hashtable区别在于：
       详见：http://blog.csdn.net/speedme/article/details/22485681
       1、hashtable是线程安全的（同步、执行效率较低），hashMap线程不安全（不同步、相对而言的执行效率要高一丢丢）。
