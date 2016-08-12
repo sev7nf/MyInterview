@@ -1,8 +1,34 @@
 详见：
+    http://www.cnblogs.com/Terry-greener/archive/2011/12/02/2271707.html
     http://blog.csdn.net/renfufei/article/details/17077425
     http://blog.csdn.net/wangzff/article/details/7296648
 
-Set和List接口都是继承自Collection接口。
+Set接口和List接口都是继承自Collection接口。
 
-    Set：没有重复对象
-    
+    Set：没有重复对象；本身无序；
+    主要用的三个有HashSet、TreeSet和LinkedHashSet
+        hashSet、linkedHashSet、treeSet都不同步。
+1、HashSet（不同步；按照哈希算法来存取集合中的对象，存取速度比较快）
+        不能保证元素的排列顺序，顺序有可能发生变化
+        不同步
+        集合元素允许存放null，但是有且只能有一个（唯一性）。
+    注意：A. HashSet在存入对象的过程中，需要调用equals()和hashCode()方法进行比较。所以需要在对象的class中重写这两个方法。(先调用hashCode()如过相同再调用equals())
+          B. 存入HashSet的对象必须定义hashCode()
+
+2、TreeSet（能够对集合中的对象进行排序）
+        可以确保集合元素处于排序状态：自然排序和定制排序。
+        底层为树结构。
+        是SortedSet接口的唯一实现类。
+    自然排序：
+            使用要排序元素的CompareTo（Object obj）方法来比较元素之间大小关系，然后将元素按照升序排列。Java提供了一个Comparable接口，该接口里定义了一个compareTo(Object obj)方法，该方法返回一个整数值。实现了该接口的对象就可以比较大小。obj1.compareTo(obj2)方法如果返回0，则说明被比较的两个对象相等，如果返回一个正数，则表明obj1大于obj2；反之，则表明obj1小于obj2。如果我们将两个对象的equals方法总是返回true，则这两个对象的compareTo方法返回应该返回0。
+        
+    定制排序：
+            要定制排序，应该使用Comparator接口，实现 int compare(T o1,T o2)方法。
+            
+3、LinkedHashSet（使用链表维护元素次序）
+            根据元素的hashCode值来决定元素的存储位置，同时使用链表维护元素的次序（使用链表保证有序性）。
+    特点：
+        不重复
+        取出时保持元素存入顺序
+        ###在迭代访问Set中的全部元素时，性能比HashSet好，但是插入时性能稍微逊色于HashSet。
+            
