@@ -1,0 +1,38 @@
+HashMap、Hashtable几乎相同。
+    HashMap：由于数据结构使用的是table+Entry储存数据，所以取出数据是无序的。
+    Hashtable：也是无序的
+HashMap、Hashtable区别在于：
+      详见：http://blog.csdn.net/speedme/article/details/22485681
+      1、hashtable是线程安全的（同步、执行效率较低），hashMap线程不安全（不同步、相对而言的执行效率要高一丢丢）。
+      2、hashMap允许有唯一key是null；
+         hashtable不允许键为null（注意hashMap可以有多个键的value为null，所以在判断的时候应该使用containsKey来区分
+      key对应的value为null或者是key本身是null的情况）
+      3、如果hashMap想要解决多线程问题的时候，可以通过Collections的静态方法Collections.synchronizedMap(map);
+         详见：http://blog.csdn.net/yangfanend/article/details/7165742
+              public class CollectionsDemo {
+              public static void main(String[] args) {
+                  // create map
+                  Map<String,String> map = new HashMap<String,String>();
+                  // populate the map
+                  map.put("1","TP"); 
+                  map.put("2","IS");
+                  map.put("3","BEST");
+                  // create a synchronized map
+                  Map<String,String> synmap = Collections.synchronizedMap(map);
+                  System.out.println("Synchronized map is :"+synmap);
+                }
+              }
+ConcurrentHashMap：
+        详见：http://blog.csdn.net/wisgood/article/details/19338693
+              http://www.cnblogs.com/likehua/p/4025124.html
+              http://blog.csdn.net/wisgood/article/details/19338693
+        优点： 融合了HashMap和Hashtable的优点，用来替代hashtable，提高了并发性。
+        解决了hashtable每次同步的时候是锁住整个结构的问题，ConcurrentHashMap每次只会锁住当前需要用到的桶。（hashtable同步时只
+能进入一个线程，而ConcurrentHashMap则可以进入16个。）
+
+LinkedHashMap：（取出的数据与插入数据的顺序相同）
+        详见：http://blog.csdn.net/llbupt/article/details/6633128
+        LinkedHashMap比HashMap多了一个链表的结构（保证了取出的数据与插入数据的顺序相同）。
+TreeMap：（能够自行定义排列顺序）
+        实现SortMap接口，能够把它保存的记录根据键排序,默认是按键值的升序排序，也可以指定排序的比较器，当用Iterator 遍历TreeMap时
+，得到的记录是排过序的。
