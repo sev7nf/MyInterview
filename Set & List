@@ -1,4 +1,8 @@
 详见：
     http://blog.csdn.net/renfufei/article/details/17077425
     http://blog.csdn.net/wangzff/article/details/7296648
+
+Set和List接口都是继承自Collection接口。
+
+    Set：没有重复对象
     
