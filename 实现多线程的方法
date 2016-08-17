@@ -1,0 +1,22 @@
+详见：
+    http://mars914.iteye.com/blog/1508429
+    http://www.cnblogs.com/heima-jieqi/archive/2012/04/09/2439080.html
+
+两种实现方法：
+1、继承Thread类：
+          多个线程分别完成自己的任务。
+2、继承Runnable接口
+          多个线程共同完成一个任务。
+          
+实现Runnable接口相对于继承Thread类来说，有如下的显著优势：
+   1.适合多个相同代码的线程去处理同一个资源的情况
+   2.可以避免由于java的单继承特性带来的局限
+   3.增强了程序的健壮性，代码能够被多个线程共享，代码与数据是独立的（还有可扩展性）
+
+区别与联系：
+1， 一个类只能继承一个父类，存在局限；一个类可以实现多个接口
+2， 在实现Runable接口的时候调用Thread的Thread（Runnable run）或者Thread(Runnable run ,String name)构造方法创建进程时，
+使用同一个Runnable实例，建立的多线程的实例变量也是共享的；但是通过继承Thread类是不能用一个实例建立多个线程；
+故而实现Runnable接口适合于资源共享；当然，继承Thread类也能够共享变量，能共享Thread类的static变量；
+3， Runnable接口和Thread之间的联系：
+    Thread类也是Runnable接口的子类
