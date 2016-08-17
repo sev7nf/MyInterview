@@ -1,6 +1,7 @@
 详见：
   http://developer.51cto.com/art/201509/490965.htm
   http://z-jiankun.iteye.com/blog/1408471
+  Lock锁详解：http://www.cnblogs.com/dolphin0520/p/3923167.html
 注意：
     ★1、线程执行同步方法时，具有排他性。
         当任意一个线程进入到一个对象的任意一个同步方法时，这个对象的所有同步方法都被锁定了，在此期间，其他任何线程
