@@ -1,6 +1,26 @@
 详见：
-    http://blog.chinaunix.net/uid-26833883-id-3627644.html
+    http://www.cnblogs.com/bizhu/archive/2012/05/12/2497493.html
+    ◆http://blog.csdn.net/goodboy1881/article/details/665041
+    ◆http://blog.chinaunix.net/uid-26833883-id-3627644.html
     http://www.cnblogs.com/xiohao/p/4439164.html
     http://blog.csdn.net/shuitawuhen/article/details/47625799
     http://yaocoder.blog.51cto.com/2668309/925372/
+    http://www.cnblogs.com/Jessy/p/3536163.html
     
+TCP：（传输层协议：可靠）
+    1、不适合做实时通讯
+    2、面向连接（三次握手、四次挥手）————————信道复用技术+虚拟信道
+    3、一个TCP协议连接其实就是在物理线路上创建的一条“虚拟信道”。这条“虚拟信道”建立后，在TCP协议发出FIN包之前（两个终端都会向对方发送一个FIN包）
+）是不会释放的。正因为这一点，TCP协议被称为面向连接的协议！   
+    
+UDP：（传输层协议：不可靠）
+    1、UDP是无连接的数据传输协议并且无重传机制,会发生丢包、收到重复包、乱序等情况。（适用于数据精确性要求不高的状态数据以及视频数据,丢包的影响
+不大的情况————对于丢包的问题一般不作处理。对于命令包这种需要精确收发的数据, 可在程序的开发中加入丢包重发和超时丢弃的处理。）
+    2、当一个UDP数据包在网络中移动时，发送过程并不知道它是否到达了目的地，除非应用层已经确认了它已到达的事实。非面向连接的协议也不能探测重复的
+和乱序的包。
+    3、UDP协议，一样会在物理线路上创建一条“虚拟信道”，否则UDP协议无法传输数据！但是，当UDP协议传完数据后，这条“虚拟信道”就被立即注销了！因此，
+UDP是不面向连接的协议！
+
+
+
+To be a better man.
