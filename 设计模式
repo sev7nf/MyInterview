@@ -1,6 +1,6 @@
 1、单例模式：懒汉、饿汉、登记式三种。
       http://blog.csdn.net/jason0539/article/details/23297037/
-      
+      http://www.blogjava.net/kenzhh/archive/2013/03/15/357824.html
     
     选择单例模式就是为了避免不一致状态
     单例模式有以下特点：
@@ -36,3 +36,13 @@ public class Singleton1 {
 
 //登记式单例：
     
+
+2、工厂模式
+      分三种：简单工厂模式、工厂方法模式、抽象工厂模式
+      http://www.cnblogs.com/zhouqiang/archive/2012/07/20/2601365.html
+      http://www.cnblogs.com/forlina/archive/2011/06/21/2086114.html
+      
+      
+简单工厂模式：
+      简单工厂模式又称静态工厂方法模式。重命名上就可以看出这个模式一定很简单。它存在的目的很简单：定义一个用于创建对象的接口。
+      
