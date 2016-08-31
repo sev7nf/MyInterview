@@ -4,6 +4,10 @@ http://www.cnblogs.com/aigongsi/archive/2012/04/01/2429166.html
 http://www.cnblogs.com/dolphin0520/p/3920373.html
 http://blog.csdn.net/changtsing_liu/article/details/21551103
 ◆http://blog.csdn.net/lonelyroamer/article/details/7949969
+◆http://smallbug-vip.iteye.com/blog/2275743
+http://www.xuebuyuan.com/820037.html
+闭锁：http://blog.csdn.net/lmj623565791/article/details/26626391
+      http://blog.csdn.net/defonds/article/details/8664948
 
 普通线程、守护线程
 
@@ -18,7 +22,7 @@ http://blog.csdn.net/changtsing_liu/article/details/21551103
 处于就绪状态的线程已经具备了运行条件，但还没有分配到CPU，处于线程就绪队列（尽管是采用队列形式，事实上，把它称为可运行池而不是可运行队列。因为
 cpu的调度不一定是按照先进先出的顺序来调度的），等待系统为其分配CPU。等待状态并不是执行状态，当系统选定一个等待执行的Thread对象后，它就会从等
 待执行状态进入执行状态，系统挑选的动作称之为“cpu调度”。一旦获得CPU，线程就进入运行状态并自动调用自己的run方法。
-  提示：如果希望子线程调用start()方法后立即执行，可以使用Thread.sleep()方式使主线程睡眠一伙儿，转去执行子线程。
+  提示：如果希望子线程调用start()方法后立即执行，可以使用Thread.sleep()方式使主线程睡眠一会儿，转去执行子线程。
 3、运行状态
 处于运行状态的线程最为复杂，它可以变为阻塞状态、就绪状态和死亡状态。
 处于就绪状态的线程，如果获得了cpu的调度，就会从就绪状态变为运行状态，执行run()方法中的任务。如果该线程失去了cpu资源，就会又从运行状态变为就
@@ -31,7 +35,7 @@ cpu的调度不一定是按照先进先出的顺序来调度的），等待系�
 ④、线程在等待某个通知（notify）
 ⑤、程序调用了线程的suspend方法将线程挂起。不过该方法容易导致死锁，所以程序应该尽量避免使用该方法。
 
-当线程的run()方法执行完，或者被强制性地终止，例如出现异常，或者调用了stop()、desyory()方法等等，就会从运行状态转变为死亡状态。
+当线程的run()方法执行完，或者被强制性地终止，例如出现异常，或者调用了stop()、destroy()方法等等，就会从运行状态转变为死亡状态。
 4、阻塞状态
 处于运行状态的线程在某些情况下，如执行了sleep（睡眠）方法，或等待I/O设备等资源，将让出CPU并暂时停止自己的运行，进入阻塞状态。 
 在阻塞状态的线程不能进入就绪队列。只有当引起阻塞的原因消除时，如睡眠时间已到，或等待的I/O设备空闲下来，线程便转入就绪状态，重新到就绪队列中
@@ -40,3 +44,44 @@ cpu的调度不一定是按照先进先出的顺序来调度的），等待系�
 当线程的run()方法执行完，或者被强制性地终止，就认为它死去。这个线程对象也许是活的，但是，它已经不是一个单独执行的线程。线程一旦死亡，就不能
 复生。 如果在一个死去的线程上调用start()方法，会抛出java.lang.IllegalThreadStateException异常。
 
+重要方法：
+      重点关注start()、interrupt()、join()、sleep()、yield()等直接控制方法，和setDaemon()、setPriority()等间接控制方法
+      
+关于sleep()方法和yield()方的区别如下：
+①、sleep方法暂停当前线程后，会进入阻塞状态，只有当睡眠时间到了，才会转入就绪状态。而yield方法调用后 ，是直接进入就绪状态，所以有可能刚进入就
+绪状态，又被调度到运行状态。
+②、sleep方法声明抛出了InterruptedException，所以调用sleep方法的时候要捕获该异常，或者显示声明抛出该异常。而yield方法则没有声明抛出任务异常。
+③、sleep方法比yield方法有更好的可移植性，通常不要依靠yield方法来控制并发线程的执行。
+
+
+线程调度有两种方式 ：
+协同式：线程的执行时间由线程本身来控制，线程任务执行完成之后主动通知系统切换到另一个线程去执行。（不推荐） 
+    优点：实现简单，线程切换操作对线程本身是可知的，不存在线程同步问题。 
+    缺点：线程执行时间不可控制，如果线程长时间执行不让出CPU执行时间可能导致系统崩溃。 
+
+抢占式：每个线程的执行时间有操作系统来分配，操作系统给每个线程分配执行的时间片，抢到时间片的线程执行，时间片用完之后重新抢占执行时间，线程的
+切换不由线程本身来决定（Java使用的线程调度方式就是抢占式调度）。 
+    优点：线程执行时间可控制，不会因为一个线程阻塞问题导致系统崩溃。 
+
+sleep/wait/yield：
+      http://blog.csdn.net/zzjjiandan/article/details/23828953
+      http://blog.csdn.net/hudashi/article/details/6958550
+      
+对象锁：
+      http://blog.csdn.net/ymeng_bupt/article/details/6826936
+      
+Synchronized和Lock区别：
+synchronized和lock的区别:
+      Lock 的锁定是通过代码实现的，而 synchronized 是在 JVM 层面上实现的。
+      synchronized 在锁定时如果方法块抛出异常，JVM 会自动将锁释放掉，不会因为出了异常没有释放锁造成线程死锁。但是 Lock 的话就享受不到 JVM 带
+来自动的功能，出现异常时必须在 finally 将锁释放掉，否则将会引起死锁。
+      在资源竞争不是很激烈的情况下，偶尔会有同步的情形下，synchronized是很合适的。原因在于，编译程序通常会尽可能的进行优化synchronize，另外可
+读性非常好，不管用没用过5.0多线程包的程序员都能理解。
+      ReentrantLock: 
+      ReentrantLock提供了多样化的同步，比如有时间限制的同步，可以被Interrupt的同步（synchronized的同步是不能Interrupt的）等。在资源竞争不激烈
+的情形下，性能稍微比synchronized差点点。但是当同步非常激烈的时候，synchronized的性能一下子能下降好几十倍。而ReentrantLock确还能维持常态。
+      Atomic: 
+      和上面的类似，不激烈情况下，性能比synchronized略逊，而激烈的时候，也能维持常态。激烈的时候，Atomic的性能会优于ReentrantLock一倍左右。但
+      是其有一个缺点，就是只能同步一个值，一段代码中只能出现一个Atomic的变量，多于一个同步无效。因为他不能在多个Atomic之间同步。
+      
+      关于synchronized和lock的详细区别请看http://www.ibm.com/developerworks/cn/java/j-jtp10264/index.html
